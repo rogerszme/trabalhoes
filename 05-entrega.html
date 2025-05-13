@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entregas - Sistema Pitdog</title>
+    <link href="./css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .lista-entregas {
+            list-style: none;
+            padding: 0;
+        }
+
+        .item-entrega {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            padding: 15px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .detalhes-entrega {
+            grid-column: 1;
+        }
+
+        .acoes-entrega {
+            grid-column: 2;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .detalhes-entrega h4 {
+            color: #555;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .detalhe {
+            margin-bottom: 8px;
+            color: #777;
+            font-size: 0.9em;
+        }
+
+        .detalhe strong {
+            color: #333;
+        }
+
+        .acoes-entrega button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease;
+        }
+
+        .acoes-entrega button.iniciar {
+            background-color: #007bff; /* Cor azul para iniciar */
+            color: #fff;
+        }
+
+        .acoes-entrega button.iniciar:hover {
+            background-color: #0056b3;
+        }
+
+        .acoes-entrega button.entregue {
+            background-color: #28a745; /* Cor verde para entregue */
+            color: #fff;
+        }
+
+        .acoes-entrega button.entregue:hover {
+            background-color: #218838;
+        }
+
+        .acoes-entrega button.ver-mapa {
+            background-color: #ffc107; /* Cor amarela para mapa */
+            color: #333;
+        }
+
+        .acoes-entrega button.ver-mapa:hover {
+            background-color: #e0a800;
+        }
+
+        .status-entrega {
+            margin-top: 10px;
+            padding: 8px;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .status-pendente {
+            background-color: #f0ad4e; /* Laranja */
+            color: #fff;
+        }
+
+        .status-em-transito {
+            background-color: #007bff; /* Azul */
+            color: #fff;
+        }
+
+        .status-entregue {
+            background-color: #28a745; /* Verde */
+            color: #fff;
+        }
+
+        .nenhum-pedido {
+            text-align: center;
+            color: #777;
+            font-style: italic;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container text-center">
+  <div class="row">
+    <div class="col">
+      <a href="./04-telaPagamento.html"><button type="button" class="btn btn-info">Tela PAGAMENTO</button></a>
+    </div>
+    <div class="col">
+      
+    </div>
+    <div class="col">
+      <a href="./06-rastrearpedidos.html"><button type="button" class="btn btn-info">Tela RASTREAR PEDIDOS</button></a>
+    </div>
+  </div>
+</div>
+    <div class="container">
+        <h2>Lista de Entregas</h2>
+
+        <ul class="lista-entregas">
+            <li class="item-entrega">
+                <div class="detalhes-entrega">
+                    <h4>Pedido #123</h4>
+                    <div class="detalhe"><strong>Cliente:</strong> João Silva</div>
+                    <div class="detalhe"><strong>Endereço:</strong> Rua das Flores, 123, Bairro Primavera</div>
+                    <div class="detalhe"><strong>Itens:</strong> 2 x X-Burger, 1 x Refrigerante Lata</div>
+                    <div class="detalhe"><strong>Total:</strong> R$ 42.00</div>
+                    <div class="status-entrega status-pendente">Pendente</div>
+                </div>
+                <div class="acoes-entrega">
+                    <button class="iniciar" onclick="iniciarEntrega('123')">Iniciar Entrega</button>
+                    <button class="ver-mapa" onclick="verMapa('Rua das Flores, 123, Bairro Primavera')">Ver Mapa</button>
+                </div>
+            </li>
+
+            <li class="item-entrega">
+                <div class="detalhes-entrega">
+                    <h4>Pedido #124</h4>
+                    <div class="detalhe"><strong>Cliente:</strong> Maria Oliveira</div>
+                    <div class="detalhe"><strong>Endereço:</strong> Avenida Central, 456, Centro</div>
+                    <div class="detalhe"><strong>Itens:</strong> 1 x X-Salada, 1 x Suco Natural</div>
+                    <div class="detalhe"><strong>Total:</strong> R$ 27.00</div>
+                    <div class="status-entrega status-em-transito">Em Trânsito</div>
+                </div>
+                <div class="acoes-entrega">
+                    <button class="entregue" onclick="marcarComoEntregue('124')">Pedido Entregue</button>
+                    <button class="ver-mapa" onclick="verMapa('Avenida Central, 456, Centro')">Ver Mapa</button>
+                </div>
+            </li>
+
+            <li class="item-entrega">
+                <div class="detalhes-entrega">
+                    <h4>Pedido #125</h4>
+                    <div class="detalhe"><strong>Cliente:</strong> Carlos Souza</div>
+                    <div class="detalhe"><strong>Endereço:</strong> Travessa da Paz, 789, Jardim Alegre</div>
+                    <div class="detalhe"><strong>Itens:</strong> 1 x X-Burger</div>
+                    <div class="detalhe"><strong>Total:</strong> R$ 18.50</div>
+                    <div class="status-entrega status-pendente">Pendente</div>
+                </div>
+                <div class="acoes-entrega">
+                    <button class="iniciar" onclick="iniciarEntrega('125')">Iniciar Entrega</button>
+                    <button class="ver-mapa" onclick="verMapa('Travessa da Paz, 789, Jardim Alegre')">Ver Mapa</button>
+                </div>
+            </li>
+        </ul>
+
+        <div id="nenhum-pedido" class="nenhum-pedido" style="display: none;">
+            Nenhum pedido de entrega no momento.
+        </div>
+    </div>
+
+    <script>
+        // Simulação de funções para interatividade
+        function iniciarEntrega(pedidoId) {
+            alert(`Entrega do pedido #${pedidoId} iniciada.`);
+            // Aqui você faria uma chamada AJAX para o backend para atualizar o status do pedido
+            const itemEntrega = Array.from(document.querySelectorAll('.item-entrega')).find(item => item.querySelector('h4').textContent.includes(`#${pedidoId}`));
+            if (itemEntrega) {
+                const statusElement = itemEntrega.querySelector('.status-entrega');
+                statusElement.textContent = 'Em Trânsito';
+                statusElement.classList.remove('status-pendente');
+                statusElement.classList.add('status-em-transito');
+                const iniciarButton = itemEntrega.querySelector('.acoes-entrega .iniciar');
+                if (iniciarButton) {
+                    iniciarButton.remove();
+                }
+                const entregueButton = document.createElement('button');
+                entregueButton.classList.add('entregue');
+                entregueButton.textContent = 'Pedido Entregue';
+                entregueButton.onclick = () => marcarComoEntregue(pedidoId);
+                itemEntrega.querySelector('.acoes-entrega').prepend(entregueButton);
+            }
+        }
+
+        function marcarComoEntregue(pedidoId) {
+            alert(`Pedido #${pedidoId} marcado como entregue.`);
+            // Aqui você faria uma chamada AJAX para o backend para atualizar o status do pedido
+            const itemEntrega = Array.from(document.querySelectorAll('.item-entrega')).find(item => item.querySelector('h4').textContent.includes(`#${pedidoId}`));
+            if (itemEntrega) {
+                const statusElement = itemEntrega.querySelector('.status-entrega');
+                statusElement.textContent = 'Entregue';
+                statusElement.classList.remove('status-em-transito');
+                statusElement.classList.add('status-entregue');
+                const acoesElement = itemEntrega.querySelector('.acoes-entrega');
+                acoesElement.innerHTML = '<button class="ver-mapa" onclick="verMapa(this.parentNode.parentNode.querySelector(\'.detalhe:nth-child(2)\').textContent.split(\': \')[1])">Ver Mapa</button>';
+            }
+        }
+
+        function verMapa(endereco) {
+            alert(`Abrindo mapa para o endereço: ${endereco}`);
+            // Em um sistema real, você integraria com um serviço de mapas (Google Maps, etc.)
+            // para exibir a localização.
+            window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(endereco)}`, '_blank');
+        }
+
+        // Simulação de carregamento inicial dos pedidos
+        const listaEntregasElement = document.querySelector('.lista-entregas');
+        if (listaEntregasElement.children.length === 0) {
+            document.getElementById('nenhum-pedido').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

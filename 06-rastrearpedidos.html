@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rastreamento do Pedido - Sistema Pitdog</title>
+    <link href="./css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .rastreamento-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .status-pedido {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .status-pedido h3 {
+            color: #555;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .status-atual {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #007bff; /* Cor azul para o status atual */
+        }
+
+        .progresso-entrega {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .progresso-entrega h3 {
+            color: #555;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .barra-progresso {
+            background-color: #e9ecef;
+            border-radius: 4px;
+            height: 10px;
+            width: 100%;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progresso {
+            background-color: #28a745; /* Cor verde para o progresso */
+            height: 100%;
+            width: 0%; /* Inicialmente 0% */
+            border-radius: 4px;
+        }
+
+        .etapas-entrega {
+            display: flex;
+            justify-content: space-between;
+            color: #777;
+            font-size: 0.9em;
+        }
+
+        .informacoes-entregador {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .informacoes-entregador h3 {
+            color: #555;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .info-entregador {
+            margin-bottom: 8px;
+            color: #777;
+            font-size: 0.9em;
+        }
+
+        .atualizacao-tempo {
+            color: #999;
+            font-size: 0.8em;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container text-center">
+  <div class="row">
+    <div class="col">
+      <a href="./05-entrega.html"><button type="button" class="btn btn-info">ENTREGA</button></a>
+    </div>
+    <div class="col">
+      <div class="rastreamento-container">
+        <h2>Rastreamento do Pedido #123</h2>
+
+        <div class="status-pedido">
+            <h3>Status Atual do Pedido</h3>
+            <div class="status-atual" id="status-atual">Aguardando Confirmação</div>
+        </div>
+
+        <div class="progresso-entrega">
+            <h3>Progresso da Entrega</h3>
+            <div class="barra-progresso">
+                <div class="progresso" id="progresso" style="width: 20%;"></div>
+            </div>
+            <div class="etapas-entrega">
+                <span>Pedido Feito</span>
+                <span>Em Preparo</span>
+                <span>Saiu para Entrega</span>
+                <span>Entregue</span>
+            </div>
+        </div>
+
+        <div class="informacoes-entregador" style="display: none;">
+            <h3>Informações do Entregador</h3>
+            <div class="info-entregador"><strong>Nome:</strong> João Entregador</div>
+            <div class="info-entregador"><strong>Veículo:</strong> Moto (ABC-1234)</div>
+            <div class="info-entregador"><strong>Contato:</strong> (XX) XXXXX-XXXX</div>
+            <div class="info-entregador"><strong>Localização:</strong> <span id="localizacao-entregador">Em Rota</span></div>
+        </div>
+
+        <div class="atualizacao-tempo">Última atualização: Agora</div>
+    </div>
+    </div>
+    <div class="col">
+      <a href="./01-telaCadastro.html"><button type="button" class="btn btn-info">INICIO</button></a>
+    </div>
+  </div>
+</div>
+    <script src="./js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+    <script>
+        // Simulação de atualização de status (em um sistema real, viria do backend)
+        function atualizarStatus(novoStatus, novaPorcentagem) {
+            document.getElementById('status-atual').textContent = novoStatus;
+            document.getElementById('progresso').style.width = `${novaPorcentagem}%`;
+
+            if (novoStatus === 'Saiu para Entrega') {
+                document.querySelector('.informacoes-entregador').style.display = 'block';
+            } else if (novoStatus === 'Entregue') {
+                document.querySelector('.rastreamento-container').innerHTML = `
+                    <h2>Pedido #123 Entregue!</h2>
+                    <p>Seu pedido foi entregue com sucesso.</p>
+                    <p>Agradecemos a preferência!</p>
+                `;
+            }
+        }
+
+        // Simulação de atualizações periódicas (substitua por comunicação real com o backend)
+        setTimeout(() => atualizarStatus('Em Preparo', 40), 3000);
+        setTimeout(() => atualizarStatus('Saiu para Entrega', 70), 8000);
+        setTimeout(() => {
+            atualizarStatus('Entregue', 100);
+            // Aqui, em um sistema real, você poderia redirecionar para uma tela de confirmação.
+        }, 15000);
+
+        // Simulação de atualização da localização do entregador (em um sistema real, viria de WebSockets ou outra tecnologia de tempo real)
+        function atualizarLocalizacao(novaLocalizacao) {
+            const localizacaoElement = document.getElementById('localizacao-entregador');
+            if (localizacaoElement) {
+                localizacaoElement.textContent = novaLocalizacao;
+            }
+        }
+
+        // Simulação de atualizações de localização
+        setInterval(() => {
+            const localizacoes = ['Próximo ao centro', 'A 5 minutos de você', 'Na sua rua'];
+            const indice = Math.floor(Math.random() * localizacoes.length);
+            atualizarLocalizacao(localizacoes[indice]);
+        }, 5000);
+    </script>
+</body>
+</html>

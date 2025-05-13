@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento do Pedido - Sistema Pitdog</title>
+    <link href="./css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .pagamento-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 500px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .resumo-pedido {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .resumo-pedido h3 {
+            margin-top: 0;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .item-pedido {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        .total-pedido {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .opcoes-pagamento {
+            margin-bottom: 20px;
+        }
+
+        .opcoes-pagamento h3 {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .opcao-pagamento {
+            margin-bottom: 10px;
+        }
+
+        input[type="radio"] {
+            margin-right: 8px;
+        }
+
+        label {
+            color: #555;
+            font-weight: bold;
+        }
+
+        .form-pagamento {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .form-pagamento.cartao,
+        .form-pagamento.pix {
+            /* Estilos específicos para cada forma de pagamento (ocultos inicialmente com JS) */
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #777;
+            font-weight: normal;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #28a745; /* Cor verde para ações positivas */
+            color: #fff;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .mensagem-erro {
+            color: #dc3545;
+            margin-top: 10px;
+        }
+    </style>
+     
+</head>
+<body>
+    <div class="container text-center">
+  <div class="row">
+    <div class="col">
+      <a href="./03-pedidos.html"><button type="button" class="btn btn-info">Tela PEDIDOS</button></a>
+    </div>
+    <div class="col">
+      <div class="pagamento-container">
+        <h2>Pagamento do Pedido</h2>
+
+        <div class="resumo-pedido">
+            <h3>Resumo do Pedido</h3>
+            <div class="item-pedido"><span>Item 1</span><span>R$ 15,00</span></div>
+            <div class="item-pedido"><span>Item 2</span><span>R$ 20,00</span></div>
+            <div class="total-pedido"><span>Total</span><span>R$ 35,00</span></div>
+        </div>
+
+        <div class="opcoes-pagamento">
+            <h3>Selecione a Forma de Pagamento</h3>
+            <div class="container text-center">
+                <div class="row">
+                    <div class="col">
+                        <div class="opcao-pagamento">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8m5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0"/>
+                        <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195z"/>
+                        <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083q.088-.517.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1z"/>
+                        <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 6 6 0 0 1 3.13-1.567"/>
+                        </svg><br>
+                        <input type="radio" id="dinheiro" name="forma_pagamento" value="dinheiro"><br>
+                        <label for="dinheiro">Dinheiro</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="opcao-pagamento">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-credit-card-fill" viewBox="0 0 16 16">
+                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1H0zm0 3v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7zm3 2h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1"/>
+                        </svg><br>
+                        <input type="radio" id="cartao" name="forma_pagamento" value="cartao">
+                        <label for="cartao">Débito / Crédito</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="opcao-pagamento">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-qr-code" viewBox="0 0 16 16">
+                            <path d="M2 2h2v2H2z"/>
+                            <path d="M6 0v6H0V0zM5 1H1v4h4zM4 12H2v2h2z"/>
+                            <path d="M6 10v6H0v-6zm-5 1v4h4v-4zm11-9h2v2h-2z"/>
+                            <path d="M10 0v6h6V0zm5 1v4h-4V1zM8 1V0h1v2H8v2H7V1zm0 5V4h1v2zM6 8V7h1V6h1v2h1V7h5v1h-4v1H7V8zm0 0v1H2V8H1v1H0V7h3v1zm10 1h-1V7h1zm-1 0h-1v2h2v-1h-1zm-4 0h2v1h-1v1h-1zm2 3v-1h-1v1h-1v1H9v1h3v-2zm0 0h3v1h-2v1h-1zm-4-1v1h1v-2H7v1z"/>
+                            <path d="M7 12h1v3h4v1H7zm9 2v2h-3v-1h2v-1z"/>
+                            </svg><br>
+                        <input type="radio" id="pix" name="forma_pagamento" value="pix"><br>
+                        <label for="pix">Pix</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+            
+            
+        </div>
+
+        <div id="form-pagamento-dinheiro" class="form-pagamento dinheiro" style="display: none;">
+            <h3>Pagar com Dinheiro</h3>
+            <div class="form-group">
+                <label for="valor-entregue">Valor Entregue:</label>
+                <input type="number" id="valor-entregue" name="valor_entregue" step="0.01">
+            </div>
+        </div>
+
+        <div id="form-pagamento-cartao" class="form-pagamento cartao" style="display: none;">
+            <h3>Pagar com Cartão</h3>
+            <div class="form-group">
+                <label for="numero-cartao">Número do Cartão:</label>
+                <input type="text" id="numero-cartao" name="numero_cartao">
+            </div>
+            <div class="form-group">
+                <label for="validade-cartao">Validade (MM/AA):</label>
+                <input type="text" id="validade-cartao" name="validade_cartao" placeholder="MM/AA">
+            </div>
+            <div class="form-group">
+                <label for="cvv-cartao">CVV:</label>
+                <input type="text" id="cvv-cartao" name="cvv_cartao" maxlength="3">
+            </div>
+        </div>
+
+        <div id="form-pagamento-pix" class="form-pagamento pix" style="display: none;">
+            <h3>Pagar com Pix</h3>
+            <p>Chave Pix: <span id="chave-pix">SUA_CHAVE_PIX</span></p>
+            <p>Escaneie o QR Code abaixo:</p>
+            <div id="qrcode-pix">
+                [Imagem do QR Code]
+            </div>
+            <p>Ou copie e cole a chave Pix.</p>
+        </div>
+
+        <button onclick="processarPagamento()">Finalizar Pagamento</button>
+
+        <div id="mensagem-erro" class="mensagem-erro" style="display: none;"></div>
+    </div>
+    </div>
+    <div class="col">
+      <a href="./05-entrega.html"><button type="button" class="btn btn-info">Tela ENTREGA</button></a>
+    </div>
+  </div>
+</div>
+    
+
+    <script>
+        const radioDinheiro = document.getElementById('dinheiro');
+        const radioCartao = document.getElementById('cartao');
+        const radioPix = document.getElementById('pix');
+        const formDinheiro = document.getElementById('form-pagamento-dinheiro');
+        const formCartao = document.getElementById('form-pagamento-cartao');
+        const formPix = document.getElementById('form-pagamento-pix');
+        const mensagemErro = document.getElementById('mensagem-erro');
+
+        radioDinheiro.addEventListener('change', () => {
+            formDinheiro.style.display = 'block';
+            formCartao.style.display = 'none';
+            formPix.style.display = 'none';
+            mensagemErro.style.display = 'none';
+        });
+
+        radioCartao.addEventListener('change', () => {
+            formDinheiro.style.display = 'none';
+            formCartao.style.display = 'block';
+            formPix.style.display = 'none';
+            mensagemErro.style.display = 'none';
+        });
+
+        radioPix.addEventListener('change', () => {
+            formDinheiro.style.display = 'none';
+            formCartao.style.display = 'none';
+            formPix.style.display = 'block';
+            mensagemErro.style.display = 'none';
+        });
+
+        function processarPagamento() {
+            const formaPagamentoSelecionada = document.querySelector('input[name="forma_pagamento"]:checked');
+
+            if (!formaPagamentoSelecionada) {
+                mensagemErro.textContent = 'Selecione uma forma de pagamento.';
+                mensagemErro.style.display = 'block';
+                return;
+            }
+
+            const formaPagamento = formaPagamentoSelecionada.value;
+            let dadosPagamento = {};
+
+            if (formaPagamento === 'dinheiro') {
+                const valorEntregue = document.getElementById('valor-entregue').value;
+                if (!valorEntregue || parseFloat(valorEntregue) < parseFloat(document.querySelector('.total-pedido span:last-child').textContent.replace('R$ ', '').replace(',', '.'))) {
+                    mensagemErro.textContent = 'Valor entregue é insuficiente.';
+                    mensagemErro.style.display = 'block';
+                    return;
+                }
+                dadosPagamento = { forma: 'dinheiro', valor_entregue: valorEntregue };
+            } else if (formaPagamento === 'cartao') {
+                const numeroCartao = document.getElementById('numero-cartao').value;
+                const validadeCartao = document.getElementById('validade-cartao').value;
+                const cvvCartao = document.getElementById('cvv-cartao').value;
+                if (!numeroCartao || !validadeCartao || !cvvCartao) {
+                    mensagemErro.textContent = 'Preencha os dados do cartão.';
+                    mensagemErro.style.display = 'block';
+                    return;
+                }
+                dadosPagamento = { forma: 'cartao', numero_cartao: numeroCartao, validade_cartao: validadeCartao, cvv_cartao: cvvCartao };
+            } else if (formaPagamento === 'pix') {
+                dadosPagamento = { forma: 'pix' };
+                // Aqui, no mundo real, você provavelmente faria uma chamada para o backend
+                // para confirmar o pagamento via Pix.
+                alert('Processando pagamento via Pix...');
+                // Após a confirmação do Pix pelo backend, você redirecionaria ou informaria o sucesso.
+                return;
+            }
+
+            // Simulação de envio dos dados de pagamento para o backend
+            console.log('Dados de pagamento:', dadosPagamento);
+            alert(`Pagamento via ${formaPagamento} processado com sucesso! (Simulação)`);
+            // Aqui você faria uma requisição AJAX para o seu backend
+            // para finalizar o pedido com os dados de pagamento.
+        }
+    </script>
+</body>
+</html>
